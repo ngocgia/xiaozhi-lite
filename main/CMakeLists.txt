@@ -89,7 +89,12 @@ set(EMOTE_RESOLUTION "320_240")
 
 # Select the board source directory from Kconfig
 # Set default assets if the board uses partition table V2
-if(CONFIG_BOARD_TYPE_BREAD_COMPACT_ESP32)
+if(CONFIG_BOARD_TYPE_AI_CAR)
+    set(BOARD_DIR "ai-car")
+    set(BUILTIN_TEXT_FONT font_noto_sans_basic_16_4)
+    set(BUILTIN_ICON_FONT font_material_symbols_16_4)
+    set(DEFAULT_EMOJI_COLLECTION noto-color-emoji_32)
+elseif(CONFIG_BOARD_TYPE_BREAD_COMPACT_ESP32)
     set(BOARD_DIR "bread-compact-esp32")
 elseif(CONFIG_BOARD_TYPE_BREAD_COMPACT_WIFI)
     set(BOARD_DIR "bread-compact-wifi")

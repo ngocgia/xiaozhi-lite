@@ -32,11 +32,12 @@ class VersionTests(unittest.TestCase):
             names = [variant["full_name"] for variant in variants]
             self.assertEqual(len(names), len(set(names)))
 
-        # xiaozhi-lite: đúng 6 biến thể của 4 board, phủ 3 dòng chip
+        # xiaozhi-lite: đúng 7 biến thể của 5 board, phủ 3 dòng chip
         idf6_names = {variant["full_name"] for variant in idf6}
         self.assertEqual(
             idf6_names,
             {
+                "ai-car",
                 "bread-compact-esp32",
                 "bread-compact-esp32-128x32",
                 "bread-compact-wifi",

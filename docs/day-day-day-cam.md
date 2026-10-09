@@ -5,6 +5,9 @@ và **board nguyên bản bán sẵn**. Dưới đây là sơ đồ chân tham c
 từ `config.h` của từng board — đây là "nguồn chân lý" khi bạn muốn đổi chân
 (không khuyến nghị đổi vì ảnh hưởng tương thích OTA).
 
+> Riêng board xe AI (`ai-car`) có sơ đồ đấu dây đầy đủ riêng (L298N, HC-SR04,
+> ST7789, nguồn...): xem [docs/huong-dan-xe-ai.md](huong-dan-xe-ai.md).
+
 ## 1. bread-compact-wifi (ESP32-S3) — DIY breadboard
 
 Board tối giản nhất cho ESP32-S3: mic + loa + OLED I2C + nút bấm, không cần

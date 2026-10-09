@@ -29,8 +29,8 @@ class CiSelectionTests(unittest.TestCase):
 
     def test_reviewed_list_covers_all_chip_targets(self):
         selected = self.load_manifest(self.manifest)
-        # 5 biến thể đại diện (bỏ bread-compact-esp32-128x32, trùng board)
-        self.assertEqual(len(selected), 5)
+        # 6 biến thể đại diện (bỏ bread-compact-esp32-128x32, trùng board)
+        self.assertEqual(len(selected), 6)
         self.assertEqual(
             {item["target"] for item in selected},
             {item["target"] for item in self.variants},
@@ -67,7 +67,7 @@ class CiSelectionTests(unittest.TestCase):
         for changes in (paths, list(reversed(paths))):
             with self.subTest(changes=changes):
                 selected = build._select_variants_for_changes(self.variants, changes)
-                self.assertEqual(len(selected), 6)
+                self.assertEqual(len(selected), 7)
                 self.assertIn(
                     "bread-compact-esp32-128x32",
                     {v["name"] for v in selected},
@@ -78,7 +78,7 @@ class CiSelectionTests(unittest.TestCase):
             self.variants,
             ["main/application.cc", "main/boards/bread-compact-wifi/config.h"],
         )
-        self.assertEqual(len(selected), 5)
+        self.assertEqual(len(selected), 6)
         self.assertEqual(
             sorted(v["name"] for v in selected if v["board"] == "bread-compact-wifi"),
             ["bread-compact-wifi", "bread-compact-wifi-128x64"],

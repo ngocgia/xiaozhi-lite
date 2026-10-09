@@ -29,6 +29,7 @@ nhận lại giọng đọc TTS phát ra loa, và điều khiển thiết bị q
 | ESP32 | `bread-compact-esp32` | `bread-compact-esp32`, `bread-compact-esp32-128x32` | Tự đấu breadboard, chi phí thấp nhất |
 | ESP32-S3 | `bread-compact-wifi` | `bread-compact-wifi`, `bread-compact-wifi-128x64` | Tự đấu breadboard, có PSRAM để chạy AFE + wake word đầy đủ |
 | ESP32-S3 | `espressif/esp32-s3-box-3` | `esp-box-3` | Board thương mại: loa + 2 mic + LCD + AEC |
+| ESP32-S3 | `ai-car` | `ai-car` | **Xe điều khiển bằng giọng nói**: L298N + HC-SR04 + ST7789, AI lái xe qua MCP ([docs/huong-dan-xe-ai.md](docs/huong-dan-xe-ai.md)) |
 | ESP32-C3 | `xmini/c3` | `xmini-c3` | Board nhỏ gọn bán sẵn (XiaGe Mini C3) |
 
 Muốn thêm board khác? Xem [docs/tao-board-moi.md](docs/tao-board-moi.md) —
@@ -60,6 +61,7 @@ Lần đầu khởi động, thiết bị phát hotspot để bạn nhập WiFi 
 | [docs/huong-dan-cai-dat.md](docs/huong-dan-cai-dat.md) | Cài ESP-IDF 6.x trên Windows/Linux |
 | [docs/huong-dan-build-va-flash.md](docs/huong-dan-build-va-flash.md) | Build, nạp, cấu hình WiFi, đổi ngôn ngữ/wake word |
 | [docs/day-day-day-cam.md](docs/day-day-day-cam.md) | Sơ đồ chân và đấu dây 3 board |
+| [docs/huong-dan-xe-ai.md](docs/huong-dan-xe-ai.md) | Xe AI điều khiển bằng giọng nói (board `ai-car`): đấu dây, MCP tools, an toàn |
 | [docs/kien-truc.md](docs/kien-truc.md) | Kiến trúc firmware: task, luồng âm thanh, máy trạng thái |
 | [docs/tao-board-moi.md](docs/tao-board-moi.md) | Thêm board mới của riêng bạn |
 | [docs/giai-quyet-su-co.md](docs/giai-quyet-su-co.md) | Sự cố thường gặp và cách xử lý |

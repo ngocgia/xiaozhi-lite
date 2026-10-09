@@ -1,8 +1,13 @@
 {
   "schema_version": 1,
   "selection_date": "2026-10-09",
-  "selection_basis": "Toàn bộ 5 biến thể của xiaozhi-lite, phủ đủ 3 dòng chip ESP32 / ESP32-S3 / ESP32-C3.",
+  "selection_basis": "6 biến thể đại diện của xiaozhi-lite, phủ đủ 3 dòng chip ESP32 / ESP32-S3 / ESP32-C3.",
   "variants": [
+    {
+      "board": "ai-car",
+      "name": "ai-car",
+      "reason": "ESP32-S3: xe AI của người dùng — ST7789 SPI, L298N + HC-SR04 qua MCP tools, NoAudioCodecSimplex"
+    },
     {
       "board": "bread-compact-esp32",
       "name": "bread-compact-esp32",

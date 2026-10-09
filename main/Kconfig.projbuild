@@ -133,6 +133,9 @@ choice BOARD_TYPE
         Loại board báo cáo lên OTA và tên biến thể firmware được cấu hình
         riêng qua config.json của từng board.
 
+    config BOARD_TYPE_AI_CAR
+        bool "AI Car ESP32-S3 (xe điều khiển qua giọng nói)"
+        depends on IDF_TARGET_ESP32S3
     config BOARD_TYPE_BREAD_COMPACT_ESP32
         bool "Bread Compact ESP32 DevKit (đấu breadboard)"
         depends on IDF_TARGET_ESP32
