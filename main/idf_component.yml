@@ -1,0 +1,74 @@
+## IDF Component Manager Manifest File
+## Danh sách component tối giản cho xiaozhi-lite (ESP32 / ESP32-S3 / ESP32-C3).
+## Các component lệ thuộc (cjson, esp-dsp, esp_lcd_touch, esp_cam_sensor...)
+## sẽ được Component Manager tự động tải theo component cha.
+dependencies:
+  # Màn hình LCD ILI9341 (board ESP32-S3-BOX-3)
+  espressif/esp_lcd_ili9341: ^2.1.0
+  # Driver OLED SH1106 (các board bread-compact dùng OLED)
+  tny-robotics/sh1106-esp-idf: ^1.0.1
+
+  # Kết nối WiFi (cấu hình qua hotspot / BluFi)
+  78/esp-wifi-connect: ~3.3.1
+  # Resample âm thanh (esp_ae_rate_cvt)
+  espressif/esp_audio_effects: ~1.3.0
+  # Bộ mã hóa/giải mã Opus của Espressif
+  espressif/esp_audio_codec: ~2.5.0
+  # Modem 4G ML307/EC801E (ml307_board.cc, biên dịch cho S3/C3)
+  78/esp-ml307: ~3.7.3
+  78/uart-uhci:
+    version: ^0.3.3
+    rules:
+    - if: target not in [esp32]
+  # Modem NT26 qua UART (nt26_board.cc, biên dịch cho S3/C3)
+  78/uart-eth-modem:
+    version: ~0.6.5
+    rules:
+    - if: target not in [esp32]
+  # Bộ font Noto + emoji + model ESP-SR đóng gói assets
+  78/xiaozhi-fonts: ~2.0.0
+  # LED WS2812
+  espressif/led_strip: ~3.0.3
+  # Driver codec âm thanh ES8311/ES7210...
+  espressif/esp_codec_dev: ~1.6.2
+  # ESP-SR: AFE, WakeNet, MultiNet
+  espressif/esp-sr: ==2.4.7
+  # Nút bấm và núm xoay
+  espressif/button: ~4.2.1
+  espressif/knob: ^1.1.0
+  # Camera (chỉ biên dịch cho ESP32-S3)
+  espressif/esp32-camera:
+    version: ^2.1.7
+    rules:
+    - if: target in [esp32s3]
+  espressif/esp_video:
+    version: ^2.4.1
+    rules:
+    - if: target in [esp32s3]
+  # Hiệu ứng ảnh (chuyển đổi màu/xoay ảnh camera)
+  espressif/esp_image_effects:
+    version: ^1.1.0
+    rules:
+    - if: target not in [esp32]
+  # Giao diện LVGL
+  lvgl/lvgl: ~9.5.0
+  esp_lvgl_port: ~2.9.0
+  # Bộ emoji động (kiểu hiển thị Emote của ESP32-S3-BOX-3)
+  espressif2022/esp_emote_expression: ^1.0.2
+  # Đọc gói assets từ partition (font/emoji/model)
+  espressif/esp_mmap_assets: ^1.4.0
+  # Ước lượng phần trăm pin qua ADC
+  espressif/adc_battery_estimation: ^0.2.2
+  # Mã hóa/giải mã JPEG
+  espressif/esp_new_jpeg: ^1.0.2
+  # Thư viện PMIC xPower (Axp2101, Sy6970)
+  cube32esp/xpowerslib: ^0.3.3
+  # Mạng USB RNDIS (rndis_board.cc, chỉ ESP32-S3)
+  espressif/iot_usbh_rndis:
+    version: ^0.3.1
+    rules:
+    - if: target in [esp32s3]
+
+  ## Yêu cầu phiên bản IDF tối thiểu
+  idf:
+    version: '>=6.0.1'

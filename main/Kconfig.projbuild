@@ -1,0 +1,333 @@
+menu "Xiaozhi Assistant"
+
+config OTA_URL
+    string "Default OTA URL"
+    default "https://api.tenclass.net/xiaozhi/ota/"
+    help
+        Ứng dụng sẽ truy cập URL này để kiểm tra firmware mới và lấy địa chỉ server.
+
+choice
+    prompt "Flash Assets"
+    default FLASH_DEFAULT_ASSETS if !USE_EMOTE_MESSAGE_STYLE
+    default FLASH_EXPRESSION_ASSETS if USE_EMOTE_MESSAGE_STYLE
+    help
+        Chọn gói tài nguyên (font, emoji) sẽ nạp vào partition assets.
+
+    config FLASH_NONE_ASSETS
+        bool "Do not flash assets"
+    config FLASH_DEFAULT_ASSETS
+        bool "Flash Default Assets"
+        depends on !USE_EMOTE_MESSAGE_STYLE
+    config FLASH_CUSTOM_ASSETS
+        bool "Flash Custom Assets"
+    config FLASH_EXPRESSION_ASSETS
+        bool "Flash Emote Assets"
+        depends on USE_EMOTE_MESSAGE_STYLE
+endchoice
+
+config CUSTOM_ASSETS_FILE
+    depends on FLASH_CUSTOM_ASSETS
+    string "Custom Assets File"
+    default "assets.bin"
+    help
+        Tệp assets tùy chỉnh để nạp. Có thể là đường dẫn cục bộ (tương đối
+        so với thư mục dự án) hoặc một URL từ xa.
+
+choice
+    prompt "Default Language"
+    default LANGUAGE_VI_VN
+    help
+        Chọn ngôn ngữ hiển thị của thiết bị (giọng nhắc tương ứng sẽ được
+        dùng khi có, nếu không sẽ dùng tiếng Anh).
+
+    config LANGUAGE_ZH_CN
+        bool "Chinese"
+    config LANGUAGE_ZH_TW
+        bool "Chinese Traditional"
+    config LANGUAGE_EN_US
+        bool "English"
+    config LANGUAGE_JA_JP
+        bool "Japanese"
+    config LANGUAGE_KO_KR
+        bool "Korean"
+    config LANGUAGE_VI_VN
+        bool "Vietnamese"
+    config LANGUAGE_TH_TH
+        bool "Thai"
+    config LANGUAGE_DE_DE
+        bool "German"
+    config LANGUAGE_FR_FR
+        bool "French"
+    config LANGUAGE_ES_ES
+        bool "Spanish"
+    config LANGUAGE_IT_IT
+        bool "Italian"
+    config LANGUAGE_RU_RU
+        bool "Russian"
+    config LANGUAGE_AR_SA
+        bool "Arabic"
+    config LANGUAGE_HI_IN
+        bool "Hindi"
+    config LANGUAGE_MR_IN
+        bool "Marathi"
+    config LANGUAGE_PT_PT
+        bool "Portuguese"
+    config LANGUAGE_PT_BR
+        bool "Portuguese (Brazil)"
+    config LANGUAGE_PL_PL
+        bool "Polish"
+    config LANGUAGE_CS_CZ
+        bool "Czech"
+    config LANGUAGE_FI_FI
+        bool "Finnish"
+    config LANGUAGE_TR_TR
+        bool "Turkish"
+    config LANGUAGE_ID_ID
+        bool "Indonesian"
+    config LANGUAGE_UK_UA
+        bool "Ukrainian"
+    config LANGUAGE_RO_RO
+        bool "Romanian"
+    config LANGUAGE_BG_BG
+        bool "Bulgarian"
+    config LANGUAGE_CA_ES
+        bool "Catalan"
+    config LANGUAGE_DA_DK
+        bool "Danish"
+    config LANGUAGE_EL_GR
+        bool "Greek"
+    config LANGUAGE_FA_IR
+        bool "Persian"
+    config LANGUAGE_FIL_PH
+        bool "Filipino"
+    config LANGUAGE_HE_IL
+        bool "Hebrew"
+    config LANGUAGE_HR_HR
+        bool "Croatian"
+    config LANGUAGE_HU_HU
+        bool "Hungarian"
+    config LANGUAGE_MS_MY
+        bool "Malay"
+    config LANGUAGE_NB_NO
+        bool "Norwegian"
+    config LANGUAGE_NL_NL
+        bool "Dutch"
+    config LANGUAGE_SK_SK
+        bool "Slovak"
+    config LANGUAGE_SL_SI
+        bool "Slovenian"
+    config LANGUAGE_SV_SE
+        bool "Swedish"
+    config LANGUAGE_SR_RS
+        bool "Serbian"
+endchoice
+
+choice BOARD_TYPE
+    prompt "Target Board"
+    default BOARD_TYPE_BREAD_COMPACT_ESP32 if IDF_TARGET_ESP32
+    default BOARD_TYPE_BREAD_COMPACT_WIFI if IDF_TARGET_ESP32S3
+    default BOARD_TYPE_XMINI_C3 if IDF_TARGET_ESP32C3
+    help
+        Chọn board phần cứng sẽ build.
+        Repo này chỉ hỗ trợ 3 dòng chip: ESP32, ESP32-S3 và ESP32-C3.
+        Loại board báo cáo lên OTA và tên biến thể firmware được cấu hình
+        riêng qua config.json của từng board.
+
+    config BOARD_TYPE_BREAD_COMPACT_ESP32
+        bool "Bread Compact ESP32 DevKit (đấu breadboard)"
+        depends on IDF_TARGET_ESP32
+    config BOARD_TYPE_BREAD_COMPACT_WIFI
+        bool "Bread Compact Wi-Fi ESP32-S3 (đấu breadboard)"
+        depends on IDF_TARGET_ESP32S3
+    config BOARD_TYPE_ESP32_S3_BOX_3
+        bool "Espressif ESP32-S3-BOX-3 (board thương mại, có AEC)"
+        depends on IDF_TARGET_ESP32S3
+    config BOARD_TYPE_XMINI_C3
+        bool "XiaGe Mini C3 (ESP32-C3)"
+        depends on IDF_TARGET_ESP32C3
+endchoice
+
+choice DISPLAY_OLED_TYPE
+    depends on BOARD_TYPE_BREAD_COMPACT_WIFI || BOARD_TYPE_BREAD_COMPACT_ESP32
+    prompt "OLED Type"
+    default OLED_SSD1306_128X32
+    help
+        Loại màn hình OLED đơn sắc gắn kèm board.
+    config OLED_SSD1306_128X32
+        bool "SSD1306 128*32"
+    config OLED_SSD1306_128X64
+        bool "SSD1306 128*64"
+    config OLED_SH1106_128X64
+        bool "SH1106 128*64"
+endchoice
+
+choice DISPLAY_STYLE
+    prompt "Select display style"
+    default USE_DEFAULT_MESSAGE_STYLE
+    help
+        Chọn kiểu giao diện hiển thị của thiết bị Xiaozhi.
+
+    config USE_DEFAULT_MESSAGE_STYLE
+        bool "Enable default message style"
+
+    config USE_WECHAT_MESSAGE_STYLE
+        bool "Enable WeChat Message Style"
+
+    config USE_EMOTE_MESSAGE_STYLE
+        bool "Emote animation style"
+        depends on BOARD_TYPE_ESP32_S3_BOX_3
+endchoice
+
+config USE_MULTILINE_CHAT_MESSAGE
+    bool "Use multiline chat message display (default mode only)"
+    depends on USE_DEFAULT_MESSAGE_STYLE
+    default n
+    help
+        Khi bật, vùng tin nhắn hội thoại ở chế độ mặc định hiển thị nhiều
+        dòng tự động xuống chữ, cao dần từ đáy màn hình.
+        Khi tắt (mặc định), chỉ hiển thị một dòng cuộn ngang ở đáy màn hình.
+
+choice WAKE_WORD_TYPE
+    prompt "Wake Word Implementation Type"
+    default USE_AFE_WAKE_WORD if IDF_TARGET_ESP32S3 && SPIRAM
+    default WAKE_WORD_DISABLED
+    help
+        Chọn kiểu triển khai wake word (từ khóa đánh thức).
+
+    config WAKE_WORD_DISABLED
+        bool "Disabled"
+        help
+            Tắt nhận diện wake word (chỉ bật mic bằng nút bấm).
+
+    config USE_ESP_WAKE_WORD
+        bool "Wakenet model without AFE"
+        depends on IDF_TARGET_ESP32C3 || (IDF_TARGET_ESP32 && SPIRAM)
+        help
+            Dùng model WakeNet đơn giản, không qua AFE.
+            Hỗ trợ ESP32-C3, và ESP32 (khi có PSRAM).
+
+    config USE_AFE_WAKE_WORD
+        bool "Wakenet model with AFE"
+        depends on IDF_TARGET_ESP32S3 && SPIRAM
+        help
+            WakeNet chạy trong AFE, có thể dùng AEC nếu board hỗ trợ.
+            Yêu cầu ESP32-S3 kèm PSRAM.
+
+    config USE_CUSTOM_WAKE_WORD
+        bool "Multinet model (Custom Wake Word)"
+        depends on IDF_TARGET_ESP32S3 && SPIRAM
+        help
+            Wake word tùy chỉnh bằng model MultiNet (phiên âm).
+            Yêu cầu ESP32-S3 kèm PSRAM.
+
+endchoice
+
+config CUSTOM_WAKE_WORD
+    string "Custom Wake Word"
+    default "xiao tu dou"
+    depends on USE_CUSTOM_WAKE_WORD
+    help
+        Wake word tùy chỉnh. Với tiếng Trung dùng pinyin, các âm cách
+        nhau bằng dấu cách.
+
+config CUSTOM_WAKE_WORD_DISPLAY
+    string "Custom Wake Word Display"
+    default "小土豆"
+    depends on USE_CUSTOM_WAKE_WORD
+    help
+        Lời chào gửi lên server sau khi phát hiện wake word.
+
+config CUSTOM_WAKE_WORD_THRESHOLD
+    int "Custom Wake Word Threshold (%)"
+    default 20
+    range 1 99
+    depends on USE_CUSTOM_WAKE_WORD
+    help
+        Ngưỡng nhận dạng wake word, khoảng 1-99. Càng nhỏ càng nhạy,
+        mặc định 20.
+
+config SEND_WAKE_WORD_DATA
+    bool "Send Wake Word Data"
+    default y
+    depends on USE_AFE_WAKE_WORD || USE_CUSTOM_WAKE_WORD
+    help
+        Gửi 2 giây âm thanh trước khi phát hiện wake word lên server
+        như tin nhắn đầu tiên của hội thoại.
+
+config WAKE_WORD_DETECTION_IN_LISTENING
+    bool "Enable Wake Word Detection in Listening Mode"
+    default n
+    depends on USE_AFE_WAKE_WORD || USE_CUSTOM_WAKE_WORD
+    help
+        Bật nhận diện wake word cả khi đang ở chế độ lắng nghe.
+        Khi bật, thiết bị có thể bị ngắt lời giữa chừng bằng wake word
+        (barge-in). Mặc định là tắt.
+
+config USE_AUDIO_PROCESSOR
+    bool "Enable AFE Audio Processing"
+    default y
+    depends on IDF_TARGET_ESP32S3 && SPIRAM
+    help
+        Bật đường xử lý âm thanh lên tương AFE (có AEC và VAD).
+        Khử ồn (NS) không bật vì dự án không kèm model NSNet.
+        Yêu cầu ESP32-S3 có PSRAM.
+
+config USE_DEVICE_AEC
+    bool "Enable Device-Side AEC"
+    default n
+    depends on USE_AUDIO_PROCESSOR && BOARD_TYPE_ESP32_S3_BOX_3
+    help
+        AEC phía thiết bị (khử tiếng vọng loa ngay trên board).
+        Để hoạt động tốt cần đường tín hiệu tham chiếu sạch từ loa và
+        cách âm vật lý giữa micro và loa. Trong repo này chỉ board
+        ESP32-S3-BOX-3 đủ điều kiện phần cứng.
+
+config USE_SERVER_AEC
+    bool "Enable Server-Side AEC (Unstable)"
+    default n
+    depends on USE_AUDIO_PROCESSOR
+    help
+        AEC phía server: thiết bị gửi kèm timestamp các frame đã phát
+        để server tự khử tiếng vọng. Cần server hỗ trợ.
+
+config USE_AUDIO_DEBUGGER
+    bool "Enable Audio Debugger"
+    default n
+    help
+        Bật trình gỡ lỗi âm thanh: gửi dữ liệu PCM qua UDP về máy tính
+        để phân tích.
+
+menu "WiFi Configuration Method"
+    help
+        Chọn cách cấu hình WiFi cho thiết bị lần đầu.
+    config USE_HOTSPOT_WIFI_PROVISIONING
+        bool "Hotspot"
+        default y
+        help
+            Dùng điểm phát WiFi (hotspot) của thiết bị để truyền cấu hình
+            WiFi (kết nối vào hotspot rồi nhập thông tin qua web).
+    config USE_ESP_BLUFI_WIFI_PROVISIONING
+        bool "ESP-BluFi"
+        select BT_ENABLED
+        select BT_BLE_42_FEATURES_SUPPORTED
+        select BT_BLE_BLUFI_ENABLE
+        help
+            Dùng BluFi (cấu hình WiFi qua Bluetooth LE). Ứng dụng phía
+            điện thoại phải hỗ trợ ffdhe3072, SHA-256 và AES-CTR.
+endmenu
+
+config AUDIO_DEBUG_UDP_SERVER
+    string "Audio Debug UDP Server Address"
+    default "192.168.2.100:8000"
+    depends on USE_AUDIO_DEBUGGER
+    help
+        Địa chỉ UDP server gỡ lỗi âm thanh, dạng IP:PORT.
+
+config RECEIVE_CUSTOM_MESSAGE
+    bool "Enable Custom Message Reception"
+    default n
+    help
+        Cho phép thiết bị nhận tin nhắn tùy chỉnh từ server (nên dùng
+        qua giao thức MQTT).
+
+endmenu

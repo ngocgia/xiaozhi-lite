@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "selection_date": "2026-10-09",
+  "selection_basis": "Toàn bộ 5 biến thể của xiaozhi-lite, phủ đủ 3 dòng chip ESP32 / ESP32-S3 / ESP32-C3.",
+  "variants": [
+    {
+      "board": "bread-compact-esp32",
+      "name": "bread-compact-esp32",
+      "reason": "ESP32 gốc: OLED SSD1306, I2S không codec, quy tắc loại nguồn riêng của ESP32"
+    },
+    {
+      "board": "bread-compact-wifi",
+      "name": "bread-compact-wifi",
+      "reason": "ESP32-S3: OLED 128x32, âm thanh I2S cơ bản, wake word AFE"
+    },
+    {
+      "board": "bread-compact-wifi",
+      "name": "bread-compact-wifi-128x64",
+      "reason": "ESP32-S3: biến thể OLED 128x64 (nhánh DISPLAY_OLED_TYPE thứ hai)"
+    },
+    {
+      "board": "espressif/esp32-s3-box-3",
+      "name": "esp-box-3",
+      "reason": "ESP32-S3 thương mại: BoxAudioCodec (ES8311+ES7210), LCD ILI9341, AEC phía thiết bị"
+    },
+    {
+      "board": "xmini/c3",
+      "name": "xmini-c3",
+      "reason": "ESP32-C3: wake word WakeNet lite, tiết kiệm pin, console USB-CDC"
+    }
+  ]
+}
